@@ -16,6 +16,12 @@ body {
 
 .jumbotron {
 	max-width: 700px;
+	height: auto;
+	text-align: center;
+}
+
+.panel {
+	margin-top: 50px;
 }
 
 #resultarea {
