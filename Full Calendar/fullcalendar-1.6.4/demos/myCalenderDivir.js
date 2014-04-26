@@ -6,11 +6,6 @@
 		        //$('#calendar').fullCalendar('changeView', 'agendaDay');
 			},	    
 
-		    eventClick: function(event, element) {
-		        //event.title = "CLICKED!";
-		        //$('#calendar').fullCalendar('updateEvent', event);
-		    },
-
 		    weekends: false,
 		    defaultView: 'agendaWeek',
 		    timeFormat: '',
@@ -18,7 +13,6 @@
 		    //minTime: '8:00',
 		    //maxTime: '17:30',
 		    slotEventOverlap: false,
-
 
 			header: {
 				left:   'month agendaDay agendaWeek',
@@ -29,7 +23,9 @@
 		});
 
 		var strJSON,
-			newJSON = [];
+			newJSON = [],
+			numResults = 20,
+			mySubject = "EECS";
 
 		function getDate(day) {
 			var day2num = { "Mo": 1, "Tu": 2, "We": 3, "Th": 4, "Fr": 5 };
@@ -38,16 +34,17 @@
 
 		function transformJSON() {
 
-			$.getJSON("http://vazzak2.ci.northwestern.edu/courses/?term=4540&subject=ECON", "json", function(result){
+			$.getJSON("http://vazzak2.ci.northwestern.edu/courses/?term=4540&subject=" + mySubject, "json", function(result){
 				var old = result;
-				var len = old.length,
-				    i;
+					len = old.length;
 				$("#resultarea").append("Number of results: " + len + "<br>");
 
-				$.each(result.slice(0,40), function(i, field){
+				$.each(result.slice(0,numResults), function(i, field){
+					displayCourseList(field["subject"] + " " + field["catalog_num"] + ": " +field["title"]);
 					for (var i=0;i<field["meeting_days"].length;i+=2) {
 						newJSON.push(
 							{
+								id: field["catalog_num"],
 								title: field["subject"] + " " + field["catalog_num"] + ": " +field["title"],
 								start: "2014-09-0" + getDate(field["meeting_days"].slice(i,i+2)) + "T" + field["start_time"] + "Z",
 								end: "2014-09-0" + getDate(field["meeting_days"].slice(i,i+2)) + "T" + field["end_time"] + "Z",
@@ -66,12 +63,12 @@
 
 
 		function displayCourses(newJSON) {
-			var html = "";
-			for (var i=0;i<20;i+=1) {
-				html += "<input type='checkbox'>" + newJSON[i].title + "<br>";
-			}
-			$('#resultarea').append(html);
 			$('#calendar').fullCalendar('addEventSource', newJSON);
+		};
+
+		function displayCourseList(title) {
+			var html = "<input type='checkbox'>" + title + "<br>";
+			$('#resultarea').append(html);
 		};
 
 		transformJSON();
