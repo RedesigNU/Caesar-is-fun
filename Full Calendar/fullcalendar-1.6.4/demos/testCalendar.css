@@ -7,21 +7,26 @@ body {
 
 #calendar {
 	width: 700px;
-	margin: 0 auto;
+	margin-top: -80px;
 	float:left;
+	margin-bottom:30px;
+	position:absolute;
 	}
 
 #resultarea {
 	height: 500px;
 	width:425px;
 	text-align: left;
+	margin-top:8px;
 	overflow-y: auto;
 	float:right;
 }
 
 #termDropdown {
 	text-align:left;
+	margin-right: 70%;
 }
+
 
 #departmentDropdown {
 	text-align: left;
@@ -33,17 +38,17 @@ body {
     overflow-x: hidden;
 }
 #title{
-	margin-right:400px;
+	text-align: right;
+	margin-right:5%;
 }
 
 #term {
-	margin-top: -10px;
-	margin-left:40%;
+	margin-top: -5px;
+	margin-left:60%;
 }
 
 #department{
-	margin-right: 40%;
-	margin-top: -10px;
+	margin-top: -5px;
 
 
 }
