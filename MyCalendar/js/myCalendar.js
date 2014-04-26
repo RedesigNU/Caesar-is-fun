@@ -130,7 +130,10 @@ $(document).ready(function() {
 
 				newJson.transformedData.push(
 					{	
-						title: field["subject"] + " " + field["catalog_num"] + ": " +field["title"]
+						title: field["subject"] + " " + field["catalog_num"] + ": " +field["title"],
+						start: new Data(y,m,d-2,5,0),
+						end: new Data(y,m,d-2,6,0),
+						allDay: false
 					}
 				);
 				
@@ -138,28 +141,7 @@ $(document).ready(function() {
 
 			var strJSON = JSON.stringify(newJson, undefined, 2); 
 			$("#resultarea").append(strJSON);
-			//alert(strJSON);
-			//alert(result[0].subject + " " + result[0].catalog_num + ": " + result[0].title);
-			
-			var titlequeue = []; 
-			for (var j = 0; j < 5 ; j++)
-			{
-				titlequeue.push(result[j].subject + " " + result[j].catalog_num + ": " + result[j].title);
-			}
-			var eventTest = [];
-			for (var k = 0; k<5 ; k++) 
-			{
-				eventTest.push(
-					{
-						title: titlequeue[k],
-						start: new Data(y,m,d-2,k+5,0),
-						end: new Data(y,m,d-2, k+6, 0),
-						allDay: false
-					}
-				)
-			}
-			$('#calendar').fullCalendar('addEventSource',eventTest);
-		
+			alert(strJSON);
 	});
 		
 });
