@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js">
+</script>
+<script>
+$(document).ready(function(){
+    $.getJSON("http://vazzak2.ci.northwestern.edu/courses/?term=4540&subject=EECS",function(result){
+      $.each(result, function(i, field){
+        $("div").append(field["subject"] + " "+ field["catalog_num"] + ": " + field["title"] + "<br>");
+      });
+    });
+});
+</script>
+</head>
+<body>
+
+<button>Get JSON data</button>
+<div></div>
+
+</body>
+</html>
