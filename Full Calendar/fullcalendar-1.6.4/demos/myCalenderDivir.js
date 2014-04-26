@@ -60,7 +60,7 @@
 					
 			});
 		};
-
+//dd
 
 		function displayCourses(newJSON) {
 			$('#calendar').fullCalendar('addEventSource', newJSON);
