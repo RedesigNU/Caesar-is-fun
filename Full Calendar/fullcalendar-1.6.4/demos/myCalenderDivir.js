@@ -26,8 +26,8 @@
 			termsJSON=[], //ADD TO MYCALENDAR*******************
 			subjectJSON=[],//ADD TO MY CALENDAR*******************
 			newJSON = [],
-			numResults = 20,
-			mySubject = "EECS";
+			numResults,
+			mySubject;
 
 
 		function transformJSON() {
@@ -35,6 +35,7 @@
 			$.getJSON("http://vazzak2.ci.northwestern.edu/courses/?term=" + myTerm + "&subject=" + mySubject, "json", function(result){
 				var old = result;
 					len = old.length;
+				numResults = Math.min(20, len);
 				$("#resultarea").append("Number of results: " + len + " Displaying: " 
 				+ numResults + "<br>");
 				$.each(result.slice(0,numResults), function(i, field){
@@ -43,17 +44,21 @@
 					displayCourseList( courseTitle, courseID);
 					for (var i=0;i<field["meeting_days"].length;i+=2) {
 						var backColor = assignColor(field["catalog_num"]);
-						newJSON.push(
-							{
-								id: courseID,
-								title: courseTitle,
-								start: "2014-09-0" + getDate(field["meeting_days"].slice(i,i+2)) + "T" + field["start_time"] + "Z",
-								end: "2014-09-0" + getDate(field["meeting_days"].slice(i,i+2)) + "T" + field["end_time"] + "Z",
-								allDay: false,
-								backgroundColor:backColor,
-								textColor: 'black'
-							}
-						);
+
+						if (field["end_time"]) {
+							newJSON.push(
+								{
+									id: courseID,
+									title: courseTitle,
+									start: "2014-09-0" + getDate(field["meeting_days"].slice(i,i+2)) + "T" + field["start_time"] + "Z",
+									end: "2014-09-0" + getDate(field["meeting_days"].slice(i,i+2)) + "T" + field["end_time"] + "Z",
+									allDay: false,
+									backgroundColor:backColor,
+									textColor: 'black'
+								}
+							);
+						}
+						else {alert("hey!");}
 					}
 				});
 
@@ -184,9 +189,6 @@
 		getTermsJSON();//**********************
 		getSubjectJSON();//********************
 		$('#calendar').fullCalendar('gotoDate', 2014, 8, 1);
-
-
-
 
 
 
