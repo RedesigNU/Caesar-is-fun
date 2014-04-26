@@ -10,6 +10,7 @@
 
 <script src="courses/tester.js"></script>
 <script src="js/myCalendar.js"></script>
+<link href ="css/myCalendar.css" rel="stylesheet">
 
 
 <script>
@@ -17,24 +18,33 @@
 </script>
 <button type="button" id="addButton" class="btn btn-default">Test Add Event</button>
 <button type="button" id="removeButton" class="btn btn-default">Test Remove Event</button>
-<style>
 
-	body {
-		margin-top: 40px;
-		text-align: center;
-		font-size: 14px;
-		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-		}
-
-	#calendar {
-		width: 900px;
-		margin: 0 auto;
-		}
-
-</style>
 </head>
 <body>
-<div id='calendar'></div>
-<div id="resultarea"></div>
+<div>
+	<div id='calendar'></div>
+	<div id="editPanel">
+		<div class="panel panel-default" id="addPanel">
+		  <!-- Default panel contents -->
+		 	<div class="panel-heading" >Added</div>
+			 <div class="checkbox" id ="eventItem">
+	    		<label>
+	      			<input type="checkbox"> test
+	    		</label>
+	  		</div>
+	  			
+			</div>
+	</div>
+</div>	
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+

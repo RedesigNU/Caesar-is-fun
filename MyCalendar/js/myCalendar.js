@@ -16,7 +16,7 @@ $(document).ready(function() {
 		defaultView: 'agendaWeek',
 		editable: true, //or true
 		//hiddenDays: [2, 4],
-		//weekends: false,
+		weekends: false,
 		events: [
 			{
 				title: 'All Day Event',
@@ -84,15 +84,15 @@ $(document).ready(function() {
 		var eventArray = 
 		[
 			{
-				id:1,
-				title:'Tester event1',
+				id:211,
+				title:'EECS 211',
 				start: new Date(y,m,d-1,8,0),
 				end: new Date(y,m,d-1,9,0),
 				allDay:false
 			},
 			{
-				id: 2, 
-				title:'Tester event2',
+				id: 213, 
+				title:'EECS 213',
 				start: new Date(y,m,d-1,13,0),
 				end: new Date(y,m,d-1,14,0),
 				allDay:false
@@ -118,31 +118,39 @@ $(document).ready(function() {
 		);
 		//alert("test test test");
 	});
+	//************************* BEGIN CODE FOR ADD/REMOVE TABLE*********
+	//eventArray is our tester array with events
+	/*
+	for (var i = 0; i < eventArray.length; i++)
+	{
+		var table = document.getElementById("addTable");
+		var	row = table.insertRow(i+3);
+		var cell1 = row.insertCell(0); 
+		//cell1.innerHTML = eventArray[i].title; 
+		cell1.innerHTML = eventArray[i].title;
+	}*/
+	for (var i = 0; i < eventArray.length; i++)
+	{
+		
+		var div = document.createElement('div');
+		var label = document.createElement('label');
+		var input = document.createElement('input');
+		var add_event = eventArray[i].title; 
+		input.appendChild(add_event);
+		label.appendChild(input); 
+		div.appendChild(label); 
+		$("<div><label><input type='checkbox'>" + add_event + "</label></div>").insertAfter("eventItem");
+		//input.type = "checkbox"
+		//label.textContent = eventArray[i].title; 
+		//div.innerHTML = label;
+		
+		//alert(eventArray[i].title);
+		
 
 
-	$.getJSON("http://vazzak2.ci.northwestern.edu/courses/?term=4540&subject=EECS", "json", function(result){
-			var old = result;
-			var len = old.length,
-			    newJson = {transformedData:[]},
-			    i;
+	}
 
-			$.each(result.slice(0,5), function(i, field){
 
-				newJson.transformedData.push(
-					{	
-						title: field["subject"] + " " + field["catalog_num"] + ": " +field["title"],
-						start: new Data(y,m,d-2,5,0),
-						end: new Data(y,m,d-2,6,0),
-						allDay: false
-					}
-				);
-				
-			});
-
-			var strJSON = JSON.stringify(newJson, undefined, 2); 
-			$("#resultarea").append(strJSON);
-			alert(strJSON);
-	});
 		
 });
 
