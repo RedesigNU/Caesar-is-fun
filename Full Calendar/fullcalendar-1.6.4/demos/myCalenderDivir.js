@@ -29,8 +29,6 @@
 		    eventClick: function(event, element) {
 		        event.title = "CLICKED!";
 		        $('#calendar').fullCalendar('updateEvent', event);
-		        transformJSON();
-		        click(event);
 		    },
 
 		    weekends: false,
@@ -46,32 +44,34 @@
 
 		$('#calendar').fullCalendar('addEventSource', courses);
 
-		function click(event) {
-			$('#calendar').fullCalendar('refetchEvents');
-		};	
-
 		function transformJSON() {
+			var strJSON,
+				newJson = {transformedData:[]};
 			$.getJSON("http://vazzak2.ci.northwestern.edu/courses/?term=4540&subject=EECS", "json", function(result){
 				var old = result;
 				var len = old.length,
-				    newJson = {transformedData:[]},
 				    i;
 
-				$.each(result.slice(0,5), function(i, field){
+				$.each(result.slice(0,10), function(i, field){
 
 					newJson.transformedData.push(
 						{
-							"title": field["subject"] + " " + field["catalog_num"] + ": " +field["title"]
+							title: field["subject"] + " " + field["catalog_num"] + ": " +field["title"],
+							start: new Date(y, m, d),
+							end: new Date(y, m, d)
 						}
 					);
 					
 				});
 
-				var strJSON = JSON.stringify(newJson, undefined, 2); 
+				strJSON = JSON.stringify(newJson, undefined, 2); 
 				$("#resultarea").append(strJSON);
 					
 			});
+
+			return newJson;
 		};
-	
+
+		var res = transformJSON();
 		
 	});
