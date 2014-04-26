@@ -57,8 +57,8 @@
 					newJson.transformedData.push(
 						{
 							title: field["subject"] + " " + field["catalog_num"] + ": " +field["title"],
-							start: new Date(y, m, d),
-							end: new Date(y, m, d)
+							start: new Date(y, m, d, 10, 30),
+							end: new Date(y, m, d, 11, 30)
 						}
 					);
 					
