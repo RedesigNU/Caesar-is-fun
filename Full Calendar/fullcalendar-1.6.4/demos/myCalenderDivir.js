@@ -42,7 +42,7 @@
 				var old = result;
 				var len = old.length,
 				    i;
-				$("#resultarea").append(len);
+				$("#resultarea").append("Number of results: " + len + "<br>");
 
 				$.each(result.slice(0,40), function(i, field){
 					for (var i=0;i<field["meeting_days"].length;i+=2) {
@@ -66,6 +66,11 @@
 
 
 		function displayCourses(newJSON) {
+			var html = "";
+			for (var i=0;i<20;i+=1) {
+				html += "<input type='checkbox'>" + newJSON[i].title + "<br>";
+			}
+			$('#resultarea').append(html);
 			$('#calendar').fullCalendar('addEventSource', newJSON);
 		};
 
