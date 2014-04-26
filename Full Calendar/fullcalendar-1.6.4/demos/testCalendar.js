@@ -40,24 +40,28 @@
 			$.getJSON("http://vazzak2.ci.northwestern.edu/courses/?term=" + myTerm + "&subject=" + mySubject, "json", function(result){
 				var old = result;
 					len = old.length;
-				$("#resultarea").append("Number of results: " + len + "<br>");
-
+				$("#resultarea").append("Number of results: " + len + " Displaying: " 
+				+ numResults + "<br>");
 				$.each(result.slice(0,numResults), function(i, field){
-					displayCourseList(field["subject"] + " " + field["catalog_num"] + ": " +field["title"]);
+					var courseTitle = field["subject"] + " " + field["catalog_num"] + ": " +field["title"],
+						courseID = field["class_num"] ;
+					displayCourseList( courseTitle, courseID);
 					for (var i=0;i<field["meeting_days"].length;i+=2) {
 						var backColor = assignColor(field["catalog_num"]);
 						newJSON.push(
 							{
-								id: field["catalog_num"],
-								title: field["subject"] + " " + field["catalog_num"] + ": " +field["title"],
+								id: courseID,
+								title: courseTitle,
 								start: "2014-09-0" + getDate(field["meeting_days"].slice(i,i+2)) + "T" + field["start_time"] + "Z",
 								end: "2014-09-0" + getDate(field["meeting_days"].slice(i,i+2)) + "T" + field["end_time"] + "Z",
 								allDay: false,
-								backgroundColor:backColor
+								backgroundColor:backColor,
+								textColor: 'black'
 							}
 						);
 					}
 				});
+
 
 				strJSON = JSON.stringify(newJSON, undefined, 2); 
 				//$("#resultarea").append(strJSON);
@@ -121,10 +125,14 @@
 
 		function displayCourses(newJSON) {
 			$('#calendar').fullCalendar('addEventSource', newJSON);
+			$("input[type=checkbox]").change(function () {
+				if (this.checked) {addCourse(this.id);}
+				else {removeCourse(this.id);}
+			});
 		};
 
-		function displayCourseList(title) {
-			var html = "<input type='checkbox'>" + title + "<br>";
+		function displayCourseList(title, courseID) {
+			var html = "<input type='checkbox' " + "id=" + courseID + " checked='checked'>" + title + "<br>";
 			$('#resultarea').append(html);
 		};
 
@@ -138,6 +146,15 @@
 			var html = "<li id='" + id + "''><a href='#''>" + terms + "</a></li>";
 			$('#termDropdown').append(html); 
 		};
+
+		function addCourse(courseID) {
+			var indices = jQuery.grep(newJSON, function(obj) {return obj.id == courseID;});
+			$('#calendar').fullCalendar('addEventSource', indices);
+		};
+
+		function removeCourse(courseID) {
+			$('#calendar').fullCalendar('removeEvents', courseID);
+		};		
 
 		$('#termDropdown').on('click', 'li', function(){//***********************
     		myTerm = $(this).attr('id');

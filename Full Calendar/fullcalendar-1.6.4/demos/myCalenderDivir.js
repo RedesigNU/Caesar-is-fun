@@ -23,6 +23,8 @@
 		});
 
 		var strJSON,
+			termsJSON=[], //ADD TO MYCALENDAR*******************
+			subjectJSON=[],//ADD TO MY CALENDAR*******************
 			newJSON = [],
 			numResults = 20,
 			mySubject = "EECS";
@@ -30,12 +32,11 @@
 
 		function transformJSON() {
 
-			$.getJSON("http://vazzak2.ci.northwestern.edu/courses/?term=4540&subject=" + mySubject, "json", function(result){
+			$.getJSON("http://vazzak2.ci.northwestern.edu/courses/?term=" + myTerm + "&subject=" + mySubject, "json", function(result){
 				var old = result;
 					len = old.length;
 				$("#resultarea").append("Number of results: " + len + " Displaying: " 
 				+ numResults + "<br>");
-
 				$.each(result.slice(0,numResults), function(i, field){
 					var courseTitle = field["subject"] + " " + field["catalog_num"] + ": " +field["title"],
 						courseID = field["class_num"] ;
@@ -58,10 +59,49 @@
 
 				strJSON = JSON.stringify(newJSON, undefined, 2); 
 				displayCourses(newJSON);
-				addSlider();
+				//addSlider();
 			});
 		};
 
+		function getTermsJSON() {//ADD TO MYCALENDAR****************
+
+			$.getJSON("http://vazzak2.ci.northwestern.edu/terms/", "json", function(result){
+				var old = result;
+					len = old.length;
+				$.each(result.slice(0,10), function(i, field){
+					displayTerms(field["term_id"],field["name"]);
+						termsJSON.push(
+							{
+								id: field["term_id"],
+								name: field["name"]
+							}
+						);
+				});
+				strJSON= JSON.stringify(termsJSON, undefined, 2); 
+			});
+		};
+
+		function getSubjectJSON() {//ADD TO MYCALENDAR*******************
+
+			$.getJSON("http://vazzak2.ci.northwestern.edu/subjects/", "json", function(result){
+				var old = result;
+					len = old.length;
+
+				$.each(result, function(i, field){
+					displaySubjects(field["symbol"],field["name"]);
+						subjectJSON.push(
+							{
+								symbol: field["symbol"],
+								name: field["name"]
+							}
+						);
+					
+				});
+
+				strJSON = JSON.stringify(subjectJSON, undefined, 2); 
+			
+			});
+		};
 
 
 		function getDate(day) {
@@ -75,8 +115,6 @@
 				if (this.checked) {addCourse(this.id);}
 				else {removeCourse(this.id);}
 			});
-
-
 		};
 
 		function displayCourseList(title, courseID) {
@@ -102,7 +140,7 @@
 			eventColor = { 5: '#A8FF00', 4: '#E8990C', 3: '#FF0000', 2:'#FFB71D', 1: '#07A5FF'}
 			return eventColor[course_number]; 
 		};
-
+/*
 		function addSlider() {
 			$( "#slider-range" ).slider({
 			  range: true,
@@ -116,8 +154,35 @@
 			$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
 			  " - $" + $( "#slider-range" ).slider( "values", 1 ) );
 		};
+		*/
 
-		transformJSON();
+		function displaySubjects(symb,name){//ADD TO MY CALENDAR*************
+			var html = "<li id='" +symb+ "'><a href='#''>" + name + "</a></li>";
+			$('#departmentDropdown').append(html);
+
+		};
+
+		function displayTerms(id,terms){//ADD TO MYCALENDAR***************
+			var html = "<li id='" + id + "''><a href='#''>" + terms + "</a></li>";
+			$('#termDropdown').append(html); 
+		};
+
+		$('#termDropdown').on('click', 'li', function(){//***********************
+    		myTerm = $(this).attr('id');
+    		$('#term-btn-title').empty();
+    		$('#term-btn-title').append(this.innerHTML);
+		});
+
+		$('#departmentDropdown').on('click', 'li', function(){//****************************
+    		mySubject = $(this).attr('id');
+    		$('#department-btn-title').empty();
+    		$('#department-btn-title').append(this.innerHTML);
+    		transformJSON();
+		});
+
+
+		getTermsJSON();//**********************
+		getSubjectJSON();//********************
 		$('#calendar').fullCalendar('gotoDate', 2014, 8, 1);
 
 

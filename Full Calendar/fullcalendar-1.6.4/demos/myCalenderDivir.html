@@ -1,34 +1,38 @@
 	<!DOCTYPE html>
 <html>
 <head>
-	<link href='../fullcalendar/fullcalendar.css' rel='stylesheet' />
-	<link href='../fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
-	<link href='myCalenderDivir.css' rel='stylesheet' />
-	
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href='../fullcalendar/fullcalendar.css' rel='stylesheet' />
+<link href='../fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+<link href='myCalenderDivir.css' rel='stylesheet' />
 
-
-		<script src="https://code.jquery.com/jquery-1.9.1.js"></script>
-	<script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script> 
-<!--
-	<script src='../lib/jquery.min.js'></script>
-	<script src='../lib/jquery-ui.custom.min.js'></script>
--->
-
-
-	<script src='../fullcalendar/fullcalendar.min.js'></script>
-	<script src='myCalenderDivir.js'></script>
-
-	<link rel="stylesheet" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
-	
-
-
-
-	<link rel="stylesheet" href="/resources/demos/style.css">
-
-
+<script src='../lib/jquery.min.js'></script>
+<script src='../lib/jquery-ui.custom.min.js'></script>
+<script src='../fullcalendar/fullcalendar.min.js'></script>
+<script src='myCalenderDivir.js'></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-slider.js"></script>
 
 </head>
 <body>
+
+	<div class="btn-group" id="term">
+	  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="term-btn-title">
+	    Term<span class="caret"></span>
+	  </button>
+	  <ul class="dropdown-menu" role="menu" id='termDropdown'>	
+	  </ul>
+	</div>
+
+
+	<div class="btn-group" id="department" >
+	  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="department-btn-title">
+	    Department<span class="caret"></span>
+	  </button>
+	  <ul class="dropdown-menu" role="menu" id="departmentDropdown">
+	  </ul>
+	</div>
+
 	<div id='calendar'></div>
 	<div id='resultarea'></div>
 	<div id='filters'>
