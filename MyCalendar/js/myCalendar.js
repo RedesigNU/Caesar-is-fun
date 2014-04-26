@@ -79,7 +79,7 @@ $(document).ready(function() {
 			eventID
 			);
 	}
-	
+
 	function createEvents() {
 		var eventArray = 
 		[
@@ -112,11 +112,13 @@ $(document).ready(function() {
 		//alert("test test test");
 	});
 	$('#removeButton').click(function() {
-		$('#calendar').fullCalendar(
+	/*	$('#calendar').fullCalendar(
 			'removeEventSource',
 			eventArray
-		);
+		); */
 		//alert("test test test");
+		removeClickedEvent(213);
+		
 	});
 	//************************* BEGIN CODE FOR ADD/REMOVE TABLE*********
 	//eventArray is our tester array with events
@@ -129,21 +131,14 @@ $(document).ready(function() {
 		//cell1.innerHTML = eventArray[i].title; 
 		cell1.innerHTML = eventArray[i].title;
 	}*/
-	for (var i = 0; i < eventArray.length; i++)
-	{
-		
-		var div = document.createElement('div');
-		var input = document.createElement('input');
-		input.innerHTML = eventArray[i].title; 
-		input.setAttribute('type', 'checkbox');
-		div.setAttribute('class', 'checkbox');
-		div.setAttribute('id', 'eventItem');
-		div.appendChild(input);
-		//alert(eventArray[i].title);
-		
-
-
-	}
+	function displayCourses(newJSON) {
+			var html = "";
+			for (var i=0;i<20;i+=1) {
+				html += "<input type='checkbox'>" + newJSON[i].title + "<br>";
+			}
+			$('#resultarea').append(html);
+			$('#calendar').fullCalendar('addEventSource', newJSON);
+	};
 
 
 		
