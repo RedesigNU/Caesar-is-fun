@@ -71,17 +71,27 @@
 		function displayCourses(newJSON) {
 			$('#calendar').fullCalendar('addEventSource', newJSON);
 			$("input[type=checkbox]").change(function () {
-				removeCourse(this.id);
+				if (this.checked) {
+					addCourse(this.id);
+				}
+				else {
+					removeCourse(this.id);
+				}
 			});
 		};
 
-		function displayCourseList(title, id) {
-			var html = "<input type='checkbox' " + "id=" + id + " checked='checked'>" + title + "<br>";
+		function displayCourseList(title, courseID) {
+			var html = "<input type='checkbox' " + "id=" + courseID + " checked='checked'>" + title + "<br>";
 			$('#resultarea').append(html);
 		};
 
-		function removeCourse(id) {
-			$('#calendar').fullCalendar('removeEvents', id);
+		function addCourse(courseID) {
+			var indices = jQuery.grep(newJSON, function(obj) {return obj.id == courseID;});
+			$('#calendar').fullCalendar('addEventSource', indices);
+		};
+
+		function removeCourse(courseID) {
+			$('#calendar').fullCalendar('removeEvents', courseID);
 		};
 
 		transformJSON();
