@@ -37,13 +37,11 @@
 				var old = result;
 					len = old.length;
 				numResults = len;
-				$("#resultarea").append("Number of results: " + len + " Displaying: " 
-				+ numResults + "<br>");
+				$("#resultarea").append("<br> Displaying: " + len + " results " + "<br><br>"); 
 				$.each(result.slice(0,numResults), function(i, field){
 					var courseTitle = field["subject"] + " " + field["catalog_num"] + ": " +field["title"],
 						courseID = field["class_num"] ;
 					displayCourseList( courseTitle, courseID);
-					//alert(field["end_time"]);
 					for (var i=0;i<(field["meeting_days"] ? field["meeting_days"].length : 0);i+=2) {
 						var backColor = assignColor(field["catalog_num"]);
 
@@ -57,7 +55,7 @@
 									allDay: false,
 									backgroundColor:backColor,
 									textColor: 'black',
-									description: "Room: " + field["room"] + "	" + " Instructor Name: " + field.instructor.name
+									description: "Course Description -	Room: " + field["room"]  + "	Instructor Name: " + field.instructor.name
 								}
 							);
 						}
