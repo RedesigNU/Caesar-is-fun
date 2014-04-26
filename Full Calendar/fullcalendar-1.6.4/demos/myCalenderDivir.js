@@ -57,10 +57,8 @@
 				});
 
 				strJSON = JSON.stringify(newJSON, undefined, 2); 
-				//$("#resultarea").append(strJSON);
 				displayCourses(newJSON);
-				//removeCourse(37991);
-					
+				addSlider();
 			});
 		};
 
@@ -74,13 +72,11 @@
 		function displayCourses(newJSON) {
 			$('#calendar').fullCalendar('addEventSource', newJSON);
 			$("input[type=checkbox]").change(function () {
-				if (this.checked) {
-					addCourse(this.id);
-				}
-				else {
-					removeCourse(this.id);
-				}
+				if (this.checked) {addCourse(this.id);}
+				else {removeCourse(this.id);}
 			});
+
+
 		};
 
 		function displayCourseList(title, courseID) {
@@ -97,8 +93,7 @@
 			$('#calendar').fullCalendar('removeEvents', courseID);
 		};
 
-		function assignColor(catalogNum)
-		{
+		function assignColor(catalogNum) {
 			var eventColor;
 				strCourse = String(catalogNum),
 				course = strCourse.substr(0,1),
@@ -106,10 +101,28 @@
 
 			eventColor = { 5: '#A8FF00', 4: '#E8990C', 3: '#FF0000', 2:'#FFB71D', 1: '#07A5FF'}
 			return eventColor[course_number]; 
-		}
+		};
+
+		function addSlider() {
+			$( "#slider-range" ).slider({
+			  range: true,
+			  min: 0,
+			  max: 10,
+			  values: [ 2, 7 ],
+			  slide: function( event, ui ) {
+			    $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+			  }
+			});
+			$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+			  " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+		};
 
 		transformJSON();
 		$('#calendar').fullCalendar('gotoDate', 2014, 8, 1);
+
+
+
+
 
 
 	});

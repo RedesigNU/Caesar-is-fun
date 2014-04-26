@@ -11,7 +11,19 @@ body {
 	}
 
 #resultarea {
+	margin-left: 20px;
+	float: left;
 	height: 300px;
+	width: 600px;
 	text-align: left;
 	overflow-y: auto;
+}
+
+#filters {
+	margin-right: 20px;
+	float: right;
+}
+
+#slider-range {
+	width: 250px;
 }

@@ -1,32 +1,45 @@
 	<!DOCTYPE html>
 <html>
 <head>
-<link href='../fullcalendar/fullcalendar.css' rel='stylesheet' />
-<link href='../fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
-<link href='myCalenderDivir.css' rel='stylesheet' />
-<script src='../lib/jquery.min.js'></script>
-<script src='../lib/jquery-ui.custom.min.js'></script>
-<script src='../fullcalendar/fullcalendar.min.js'></script>
-<script src='myCalenderDivir.js'></script>
-<style>
+	<link href='../fullcalendar/fullcalendar.css' rel='stylesheet' />
+	<link href='../fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+	<link href='myCalenderDivir.css' rel='stylesheet' />
+	
 
-	body {
-		margin-top: 40px;
-		text-align: center;
-		font-size: 14px;
-		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-		}
 
-	#calendar {
-		width: 900px;
-		margin: 0 auto;
-		}
+		<script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script> 
+<!--
+	<script src='../lib/jquery.min.js'></script>
+	<script src='../lib/jquery-ui.custom.min.js'></script>
+-->
 
-</style>
+
+	<script src='../fullcalendar/fullcalendar.min.js'></script>
+	<script src='myCalenderDivir.js'></script>
+
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
+	
+
+
+
+	<link rel="stylesheet" href="/resources/demos/style.css">
+
+
+
 </head>
 <body>
-<div id='calendar'></div>
-<div id='resultarea'></div>
+	<div id='calendar'></div>
+	<div id='resultarea'></div>
+	<div id='filters'>
+		<p>
+		  <label for="amount">Price range:</label>
+		  <input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;">
+		</p> 
+		<div id="slider-range"></div>
+	</div>
+
+
 
 </body>
 </html>
