@@ -64,7 +64,7 @@
 
 				strJSON = JSON.stringify(newJSON, undefined, 2); 
 				displayCourses(newJSON);
-				//addSlider();
+				addSlider();
 			});
 		};
 
@@ -145,7 +145,7 @@
 			eventColor = { 5: '#A8FF00', 4: '#E8990C', 3: '#FF0000', 2:'#FFB71D', 1: '#07A5FF'}
 			return eventColor[course_number]; 
 		};
-/*
+
 		function addSlider() {
 			$( "#slider-range" ).slider({
 			  range: true,
@@ -159,7 +159,7 @@
 			$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
 			  " - $" + $( "#slider-range" ).slider( "values", 1 ) );
 		};
-		*/
+		
 
 		function displaySubjects(symb,name){//ADD TO MY CALENDAR*************
 			var html = "<li id='" +symb+ "'><a href='#''>" + name + "</a></li>";
