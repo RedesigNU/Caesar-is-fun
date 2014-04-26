@@ -57,8 +57,8 @@
 					newJson.push(
 						{
 							title: field["subject"] + " " + field["catalog_num"] + ": " +field["title"],
-							start: new Date(y, m, d-2, 10, 30),
-							end: new Date(y, m, d-2, 11, 30),
+							start: "Thu, 24 Apr 2014 " + field["start_time"],
+							end: "Thu, 24 Apr 2014 " + field["end_time"],
 							allDay: false
 						}
 					);
@@ -73,11 +73,11 @@
 		};
 
 		function test(testJSON) {
-			var c = testJSON;
-			$('#calendar').fullCalendar('addEventSource', c);
+			$('#calendar').fullCalendar('addEventSource', testJSON);
 		};
 
 		transformJSON();
+		//$('#calendar').fullCalendar('addEventSource', courses);
 
 	});
 
