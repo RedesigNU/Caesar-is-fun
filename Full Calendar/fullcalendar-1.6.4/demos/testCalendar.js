@@ -72,7 +72,7 @@
 			var course_number = parseInt(course);
 			//alert(course_number); 
 
-			eventColor = { 5: '#A8FF00', 4: '#E8990C', 3: '#FF0000', 2:'#4E0CE8', 1: '#0DE8FF'}
+			eventColor = { 5: '#A8FF00', 4: '#E8990C', 3: '#FF0000', 2:'#FFB71D', 1: '#07A5FF'}
 			return eventColor[course_number]; 
 		}
 
