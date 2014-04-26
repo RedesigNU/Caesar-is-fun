@@ -5,21 +5,20 @@
 		var m = date.getMonth();
 		var y = date.getFullYear();
 
-		var courses = {
-    events: [
-        {
-            title: 'Event1',
-            start: '2011-04-04'
-        },
-        {
-            title: 'Event2',
-            start: '2011-05-05'
-        }
-        // etc...
-    ],
-    color: 'yellow',   // an option!
-    textColor: 'black' // an option!
-}
+		var courses = [
+			{
+				id: 213,
+				title: 'EECS 213',
+				start: new Date(y, m, d-1, 10, 30),
+				allDay: false
+			},
+			{
+				id: 214,
+				title: 'EECS 214',
+				start: new Date(y, m, d-2, 11, 00),
+				allDay: false
+			}
+		]
 		
 	    $('#calendar').fullCalendar({
 
@@ -44,7 +43,7 @@
 		});
 
 		var strJSON,
-			newJson = {transformedData:[]};
+			newJson = [];
 
 		function transformJSON() {
 
@@ -53,9 +52,9 @@
 				var len = old.length,
 				    i;
 
-				$.each(result.slice(0,5), function(i, field){
+				$.each(result.slice(0,10), function(i, field){
 
-					newJson.transformedData.push(
+					newJson.push(
 						{
 							title: field["subject"] + " " + field["catalog_num"] + ": " +field["title"],
 							start: new Date(y, m, d-2, 10, 30),
@@ -67,21 +66,18 @@
 				});
 
 				strJSON = JSON.stringify(newJson, undefined, 2); 
-
 				$("#resultarea").append(strJSON);
-				test(strJSON);
+				test(newJson);
 					
 			});
-
-			return newJson;
 		};
 
 		function test(testJSON) {
-			$('#calendar').fullCalendar('addEventSource', testJSON);
+			var c = testJSON;
+			$('#calendar').fullCalendar('addEventSource', c);
 		};
 
-		var res = transformJSON();
-		$('#calendar').fullCalendar('addEventSource', courses);
+		transformJSON();
 
 	});
 
