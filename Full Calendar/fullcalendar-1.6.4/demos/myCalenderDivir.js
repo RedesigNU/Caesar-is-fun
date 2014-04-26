@@ -2,7 +2,8 @@
 
 	    $('#calendar').fullCalendar({
 
-			dayClick: function() {
+			eventClick: function(event) {
+				$('#description').text(event.description);
 		        //$('#calendar').fullCalendar('changeView', 'agendaDay');
 			},	    
 
@@ -55,7 +56,8 @@
 									end: "2014-09-0" + getDate(field["meeting_days"].slice(i,i+2)) + "T" + field["end_time"] + "Z",
 									allDay: false,
 									backgroundColor:backColor,
-									textColor: 'black'
+									textColor: 'black',
+									description: "Room: " + field["room"] + "	" + " Instructor Name: " + field.instructor.name
 								}
 							);
 						}
