@@ -137,6 +137,7 @@
 			$('#calendar').fullCalendar('removeEvents', courseID);
 		};
 
+
 		function assignColor(catalogNum) {
 			var eventColor;
 				strCourse = String(catalogNum),
@@ -147,21 +148,6 @@
 			return eventColor[course_number]; 
 		};
 
-		function addSlider() {
-			$( "#slider-range" ).slider({
-			  range: true,
-			  min: 0,
-			  max: 10,
-			  values: [ 2, 7 ],
-			  slide: function( event, ui ) {
-			    $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-			  }
-			});
-			$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-			  " - $" + $( "#slider-range" ).slider( "values", 1 ) );
-		};
-		
-
 		function displaySubjects(symb,name){//ADD TO MY CALENDAR*************
 			var html = "<li id='" +symb+ "'><a href='#''>" + name + "</a></li>";
 			$('#departmentDropdown').append(html);
@@ -171,6 +157,29 @@
 		function displayTerms(id,terms){//ADD TO MYCALENDAR***************
 			var html = "<li id='" + id + "''><a href='#''>" + terms + "</a></li>";
 			$('#termDropdown').append(html); 
+		};
+
+		function filterCourses(time) {
+			var t1 = parseInt(newJSON[0].start.toString().slice(20,21))
+			removeCourse();
+			var indices = jQuery.grep(newJSON, function(obj) {return parseInt(obj.start.toString().slice(20,21))>parseInt(time);});
+			$('#calendar').fullCalendar('addEventSource', indices);
+		};
+
+		function addSlider() {
+			$( "#slider-range" ).slider({
+			  range: true,
+			  min: 8,
+			  max: 22,
+			  values: [ 8, 22 ],
+			  slide: function( event, ui ) {
+			  	var val = "Time: " + ui.values[ 0 ] + ":00 - " + ui.values[ 1 ] + ":00";
+			    $( "#amount" ).val( val);
+			    filterCourses(ui.values[ 0 ]);
+			  }
+			});
+			$( "#amount" ).val( "Time: " + $( "#slider-range" ).slider( "values", 0 ) +
+			  ":00 - " + $( "#slider-range" ).slider( "values", 1 ) + ":00" );
 		};
 
 		$('#termDropdown').on('click', 'li', function(){//***********************
