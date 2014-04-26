@@ -48,17 +48,20 @@
 					displayCourseList( courseTitle, courseID);
 					for (var i=0;i<field["meeting_days"].length;i+=2) {
 						var backColor = assignColor(field["catalog_num"]);
-						newJSON.push(
-							{
-								id: courseID,
-								title: courseTitle,
-								start: "2014-09-0" + getDate(field["meeting_days"].slice(i,i+2)) + "T" + field["start_time"] + "Z",
-								end: "2014-09-0" + getDate(field["meeting_days"].slice(i,i+2)) + "T" + field["end_time"] + "Z",
-								allDay: false,
-								backgroundColor:backColor,
-								textColor: 'black'
-							}
-						);
+						if(field["meeting_days"]!=null && field["start_time"]!=null)
+						{
+							newJSON.push(
+								{
+									id: field["class_num"],
+									title: courseTitle,
+									start: "2014-09-0" + getDate(field["meeting_days"].slice(i,i+2)) + "T" + field["start_time"] + "Z",
+									end: "2014-09-0" + getDate(field["meeting_days"].slice(i,i+2)) + "T" + field["end_time"] + "Z",
+									allDay: false,
+									backgroundColor:backColor,
+									textColor: 'black'
+								}
+							);
+						}
 					}
 				});
 
@@ -66,7 +69,7 @@
 				strJSON = JSON.stringify(newJSON, undefined, 2); 
 				//$("#resultarea").append(strJSON);
 				displayCourses(newJSON);
-					
+				$('#calendar').fullCalendar('refetchEvents');	
 			});
 		};
 
@@ -93,7 +96,6 @@
 			$.getJSON("http://vazzak2.ci.northwestern.edu/subjects/", "json", function(result){
 				var old = result;
 					len = old.length;
-
 				$.each(result, function(i, field){
 					displaySubjects(field["symbol"],field["name"]);
 						subjectJSON.push(
@@ -132,7 +134,7 @@
 		};
 
 		function displayCourseList(title, courseID) {
-			var html = "<input type='checkbox' " + "id=" + courseID + " checked='checked'>" + title + "<br>";
+			var html = "<input type='checkbox' " + "id='" + courseID + "' checked='checked'>" + title + "<br>";
 			$('#resultarea').append(html);
 		};
 
@@ -172,7 +174,7 @@
 
 		getTermsJSON();//**********************
 		getSubjectJSON();//********************
-		
+		//alert(termsJSON);
 		$('#calendar').fullCalendar('gotoDate', 2014, 8, 1);
 
 	});

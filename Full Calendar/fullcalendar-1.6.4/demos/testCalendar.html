@@ -15,22 +15,19 @@
 <style>
 
 	body {
-		margin-top: 40px;
+		margin-top: 20px;
 		text-align: center;
 		font-size: 14px;
 		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
 		}
 
-	#calendar {
-		width: 900px;
-		margin: 0 auto;
-		}
+
 
 </style>
 </head>
 <body>
 
-
+<h1 id="title">Planning with Caesar</h1>
 <div class="btn-group" id="term">
   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="term-btn-title">
     Term<span class="caret"></span>
@@ -44,15 +41,15 @@
   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="department-btn-title">
     Department<span class="caret"></span>
   </button>
-  <ul class="dropdown-menu" role="menu" id="departmentDropdown">
+  <ul class="dropdown-menu scrollable-menu" role="menu" id="departmentDropdown">
   </ul>
 </div>
 
 
-
-<div id='calendar'></div>
-<div id='resultarea'></div>
-
+<div>
+	<div id='calendar'></div>
+	<div id='resultarea'></div>
+</div>
 
 
 
