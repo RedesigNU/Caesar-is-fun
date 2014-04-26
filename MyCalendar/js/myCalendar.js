@@ -5,11 +5,7 @@ $(document).ready(function() {
 	var m = date.getMonth();
 	var y = date.getFullYear();
 
-	/*
-	$('#DSGN').click(function() {
-		$('#department-category').empty();
-		$('#department-category').append("DSGN");
-	}); */
+
 	
 	$('#calendar').fullCalendar({
 		header: {
@@ -121,6 +117,49 @@ $(document).ready(function() {
 			eventArray
 		);
 		//alert("test test test");
+	});
+
+
+	$.getJSON("http://vazzak2.ci.northwestern.edu/courses/?term=4540&subject=EECS", "json", function(result){
+			var old = result;
+			var len = old.length,
+			    newJson = {transformedData:[]},
+			    i;
+
+			$.each(result.slice(0,5), function(i, field){
+
+				newJson.transformedData.push(
+					{	
+						title: field["subject"] + " " + field["catalog_num"] + ": " +field["title"]
+					}
+				);
+				
+			});
+
+			var strJSON = JSON.stringify(newJson, undefined, 2); 
+			$("#resultarea").append(strJSON);
+			//alert(strJSON);
+			//alert(result[0].subject + " " + result[0].catalog_num + ": " + result[0].title);
+			
+			var titlequeue = []; 
+			for (var j = 0; j < 5 ; j++)
+			{
+				titlequeue.push(result[j].subject + " " + result[j].catalog_num + ": " + result[j].title);
+			}
+			var eventTest = [];
+			for (var k = 0; k<5 ; k++) 
+			{
+				eventTest.push(
+					{
+						title: titlequeue[k],
+						start: new Data(y,m,d-2,k+5,0),
+						end: new Data(y,m,d-2, k+6, 0),
+						allDay: false
+					}
+				)
+			}
+			$('#calendar').fullCalendar('addEventSource',eventTest);
+		
 	});
 		
 });
