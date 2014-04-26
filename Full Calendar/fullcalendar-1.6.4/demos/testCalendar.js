@@ -36,7 +36,7 @@
 		};
 
 		function transformJSON() {
-
+			
 			$.getJSON("http://vazzak2.ci.northwestern.edu/courses/?term=" + myTerm + "&subject=" + mySubject, "json", function(result){
 				var old = result;
 					len = old.length;
