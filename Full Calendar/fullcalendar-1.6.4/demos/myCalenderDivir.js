@@ -9,15 +9,15 @@
 		    weekends: false,
 		    defaultView: 'agendaWeek',
 		    timeFormat: '',
-		    firstHour: 9,
+		    firstHour: 8,
 		    //minTime: '8:00',
-		    //maxTime: '17:30',
+		    maxTime: '21:00',
 		    slotEventOverlap: false,
 
 			header: {
 				left:   'month agendaDay agendaWeek',
 				center: '',
-				right:  'prev,next'
+				right:  ''
 			}
 		
 		});
@@ -41,13 +41,16 @@
 						courseID = field["class_num"] ;
 					displayCourseList( courseTitle, courseID);
 					for (var i=0;i<field["meeting_days"].length;i+=2) {
+						var backColor = assignColor(field["catalog_num"]);
 						newJSON.push(
 							{
 								id: courseID,
 								title: courseTitle,
 								start: "2014-09-0" + getDate(field["meeting_days"].slice(i,i+2)) + "T" + field["start_time"] + "Z",
 								end: "2014-09-0" + getDate(field["meeting_days"].slice(i,i+2)) + "T" + field["end_time"] + "Z",
-								allDay: false
+								allDay: false,
+								backgroundColor:backColor,
+								textColor: 'black'
 							}
 						);
 					}
@@ -93,6 +96,17 @@
 		function removeCourse(courseID) {
 			$('#calendar').fullCalendar('removeEvents', courseID);
 		};
+
+		function assignColor(catalogNum)
+		{
+			var eventColor;
+				strCourse = String(catalogNum),
+				course = strCourse.substr(0,1),
+				course_number = parseInt(course);
+
+			eventColor = { 5: '#A8FF00', 4: '#E8990C', 3: '#FF0000', 2:'#FFB71D', 1: '#07A5FF'}
+			return eventColor[course_number]; 
+		}
 
 		transformJSON();
 		$('#calendar').fullCalendar('gotoDate', 2014, 8, 1);
