@@ -23,9 +23,12 @@
 		});
 
 		var strJSON,
+			termsJSON=[], //ADD TO MYCALENDAR*******************
+			subjectJSON=[],//ADD TO MY CALENDAR*******************
 			newJSON = [],
 			numResults = 20,
-			mySubject = "EECS";
+			myTerm,
+			mySubject;
 
 		function getDate(day) {
 			var day2num = { "Mo": 1, "Tu": 2, "We": 3, "Th": 4, "Fr": 5 };
@@ -34,7 +37,7 @@
 
 		function transformJSON() {
 
-			$.getJSON("http://vazzak2.ci.northwestern.edu/courses/?term=4540&subject=" + mySubject, "json", function(result){
+			$.getJSON("http://vazzak2.ci.northwestern.edu/courses/?term=" + myTerm + "&subject=" + mySubject, "json", function(result){
 				var old = result;
 					len = old.length;
 				$("#resultarea").append("Number of results: " + len + "<br>");
@@ -62,6 +65,46 @@
 					
 			});
 		};
+
+		function getTermsJSON() {//ADD TO MYCALENDAR****************
+
+			$.getJSON("http://vazzak2.ci.northwestern.edu/terms/", "json", function(result){
+				var old = result;
+					len = old.length;
+				$.each(result.slice(0,10), function(i, field){
+					displayTerms(field["term_id"],field["name"]);
+						termsJSON.push(
+							{
+								id: field["term_id"],
+								name: field["name"]
+							}
+						);
+				});
+				strJSON= JSON.stringify(termsJSON, undefined, 2); 
+				
+			});
+		};
+		function getSubjectJSON() {//ADD TO MYCALENDAR*******************
+
+			$.getJSON("http://vazzak2.ci.northwestern.edu/subjects/", "json", function(result){
+				var old = result;
+					len = old.length;
+
+				$.each(result, function(i, field){
+					displaySubjects(field["symbol"],field["name"]);
+						subjectJSON.push(
+							{
+								symbol: field["symbol"],
+								name: field["name"]
+							}
+						);
+					
+				});
+
+				strJSON = JSON.stringify(subjectJSON, undefined, 2); 
+			
+			});
+		};
 		
 		function assignColor(catalogNum)
 		{
@@ -85,7 +128,34 @@
 			$('#resultarea').append(html);
 		};
 
-		transformJSON();
+		function displaySubjects(symb,name){//ADD TO MY CALENDAR*************
+			var html = "<li id='" +symb+ "'><a href='#''>" + name + "</a></li>";
+			$('#departmentDropdown').append(html);
+
+		};
+
+		function displayTerms(id,terms){//ADD TO MYCALENDAR***************
+			var html = "<li id='" + id + "''><a href='#''>" + terms + "</a></li>";
+			$('#termDropdown').append(html); 
+		};
+
+		$('#termDropdown').on('click', 'li', function(){//***********************
+    		myTerm = $(this).attr('id');
+    		$('#term-btn-title').empty();
+    		$('#term-btn-title').append(this.innerHTML);
+		});
+
+		$('#departmentDropdown').on('click', 'li', function(){//****************************
+    		mySubject = $(this).attr('id');
+    		$('#department-btn-title').empty();
+    		$('#department-btn-title').append(this.innerHTML);
+    		transformJSON();
+		});
+
+
+		getTermsJSON();//**********************
+		getSubjectJSON();//********************
+		
 		$('#calendar').fullCalendar('gotoDate', 2014, 8, 1);
 
 	});
