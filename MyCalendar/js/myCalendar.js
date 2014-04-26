@@ -133,17 +133,12 @@ $(document).ready(function() {
 	{
 		
 		var div = document.createElement('div');
-		var label = document.createElement('label');
 		var input = document.createElement('input');
-		var add_event = eventArray[i].title; 
-		input.appendChild(add_event);
-		label.appendChild(input); 
-		div.appendChild(label); 
-		$("<div><label><input type='checkbox'>" + add_event + "</label></div>").insertAfter("eventItem");
-		//input.type = "checkbox"
-		//label.textContent = eventArray[i].title; 
-		//div.innerHTML = label;
-		
+		input.innerHTML = eventArray[i].title; 
+		input.setAttribute('type', 'checkbox');
+		div.setAttribute('class', 'checkbox');
+		div.setAttribute('id', 'eventItem');
+		div.appendChild(input);
 		//alert(eventArray[i].title);
 		
 
