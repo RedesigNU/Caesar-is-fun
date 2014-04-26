@@ -27,3 +27,9 @@ body {
 #slider-range {
 	width: 250px;
 }
+
+.scrollable-menu {
+	height: auto;
+	max-height: 500px;
+	overflow-x: hidden;
+}

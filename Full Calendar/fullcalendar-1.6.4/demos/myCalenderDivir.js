@@ -9,7 +9,7 @@
 		    weekends: false,
 		    defaultView: 'agendaWeek',
 		    timeFormat: '',
-		    firstHour: 8,
+		    firstHour: 9,
 		    //minTime: '8:00',
 		    maxTime: '21:00',
 		    slotEventOverlap: false,
@@ -17,7 +17,7 @@
 			header: {
 				left:   'month agendaDay agendaWeek',
 				center: '',
-				right:  ''
+				right:  'prev,next'
 			}
 		
 		});
@@ -35,17 +35,18 @@
 			$.getJSON("http://vazzak2.ci.northwestern.edu/courses/?term=" + myTerm + "&subject=" + mySubject, "json", function(result){
 				var old = result;
 					len = old.length;
-				numResults = Math.min(20, len);
+				numResults = len;
 				$("#resultarea").append("Number of results: " + len + " Displaying: " 
 				+ numResults + "<br>");
 				$.each(result.slice(0,numResults), function(i, field){
 					var courseTitle = field["subject"] + " " + field["catalog_num"] + ": " +field["title"],
 						courseID = field["class_num"] ;
 					displayCourseList( courseTitle, courseID);
-					for (var i=0;i<field["meeting_days"].length;i+=2) {
+					//alert(field["end_time"]);
+					for (var i=0;i<(field["meeting_days"] ? field["meeting_days"].length : 0);i+=2) {
 						var backColor = assignColor(field["catalog_num"]);
 
-						if (field["end_time"]) {
+						if (typeof field["end_time"]=="string") {
 							newJSON.push(
 								{
 									id: courseID,
@@ -58,7 +59,7 @@
 								}
 							);
 						}
-						else {alert("hey!");}
+						else {console.log("hey");}
 					}
 				});
 
@@ -82,7 +83,7 @@
 							}
 						);
 				});
-				strJSON= JSON.stringify(termsJSON, undefined, 2); 
+				strJSON= JSON.stringify(termsJSON, undefined, 2);
 			});
 		};
 
@@ -176,12 +177,16 @@
     		myTerm = $(this).attr('id');
     		$('#term-btn-title').empty();
     		$('#term-btn-title').append(this.innerHTML);
+    		removeCourse();
+    		$('#resultarea').empty();
 		});
 
 		$('#departmentDropdown').on('click', 'li', function(){//****************************
     		mySubject = $(this).attr('id');
     		$('#department-btn-title').empty();
     		$('#department-btn-title').append(this.innerHTML);
+    		removeCourse();
+    		$('#resultarea').empty();
     		transformJSON();
 		});
 
